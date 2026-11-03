@@ -103,3 +103,6 @@ conté cuántas ventas se pagaron con cada método usando value_counts, sin mira
 5. ¿Cuáles son los cinco clientes con más compras?
 Nicolás Cardona, Matías Rodríguez, Mía Quintero, Luna Montoya y Luis Pérez, con 2 compras cada uno.
 ordené por número de compras y, como todos empataron con 2, usé el gasto total como desempate. Ningún cliente tiene más de 2 compras: hay 8 clientes empatados con 2 (68 ventas entre 60 clientes), así que el gasto decidió cuáles 5 entran al top
+## Desarrollo del taller
+
+**Nombre:** Yuleith Tatiana Suarez Quintero
