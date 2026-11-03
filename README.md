@@ -89,7 +89,17 @@ Para entregar, agrega al final de este `README.md` una sección con tu nombre y 
 ## Preguntas de negocio
 
 1. ¿Qué categoría genera más ingresos?
+Tecnologia, con $14'290.000.
+sume el total de las ventas de cada categoria con groupby y las ordene de mayor a menor.
 2. ¿Qué canal vende más?
+Online, que gana con los dos criterios: tiene más ventas (35 contra 33 de Tienda) y muchos más ingresos ($14'669.000 contra $4'507.000).
+usé principalmente los ingresos, porque la diferencia en cantidad de ventas es pequeña solo 2.
 3. ¿Los clientes VIP compran más que los Regulares?
+Sí. Cada cliente VIP hace en promedio 1,21 compras y gasta $336.083, mientras que cada Regular hace 1,08 compras y gasta $308.611.
+comparé promedios por cliente, no totales. En totales los Regulares parecen ganar ($11'110.000 contra $8'066.000), pero solo porque son más clientes (36 contra 24). Al dividir entre el número de clientes se ve que los VIP compran más
 4. ¿Qué método de pago es el más usado?
+Efectivo, con 30 ventas (44,1 %), seguido de Tarjeta (25) y Transferencia (13).
+conté cuántas ventas se pagaron con cada método usando value_counts, sin mirar el monto.
 5. ¿Cuáles son los cinco clientes con más compras?
+Nicolás Cardona, Matías Rodríguez, Mía Quintero, Luna Montoya y Luis Pérez, con 2 compras cada uno.
+ordené por número de compras y, como todos empataron con 2, usé el gasto total como desempate. Ningún cliente tiene más de 2 compras: hay 8 clientes empatados con 2 (68 ventas entre 60 clientes), así que el gasto decidió cuáles 5 entran al top

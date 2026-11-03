@@ -23,7 +23,11 @@ def ingresos_por_categoria(df):
     Pista: df.groupby("categoria")["total"].sum().sort_values(ascending=False)
     """
     # TODO 8: calcular e imprimir los ingresos por categoría y la categoría que más ingresa.
-    pass
+    ingresos = df.groupby("categoria")["total"].sum().sort_values(ascending=False)
+
+    print("\n===== Pregunta 1: Ingresos por categoría =====")
+    print(ingresos)
+    print(f"Categoría con más ingresos: {ingresos.index[0]} (${ingresos.iloc[0]:,})")
 
 
 def canal_que_mas_vende(df):
@@ -32,7 +36,15 @@ def canal_que_mas_vende(df):
     Pista: agrupar por "canal" y usar .agg(ventas=("id_venta", "count"), ingresos=("total", "sum")).
     """
     # TODO 9: calcular e imprimir ventas e ingresos por canal.
-    pass
+    por_canal = df.groupby("canal").agg(
+        ventas=("id_venta", "count"),
+        ingresos=("total", "sum"),
+    )
+
+    print("\n===== Pregunta 2: Ventas e ingresos por canal =====")
+    print(por_canal)
+    print(f"Canal con más ventas: {por_canal['ventas'].idxmax()}")
+    print(f"Canal con más ingresos: {por_canal['ingresos'].idxmax()}")
 
 
 def clientes_vip_vs_regular(df):
@@ -43,7 +55,23 @@ def clientes_vip_vs_regular(df):
     y luego dividir compras y gasto entre el número de clientes.
     """
     # TODO 10: calcular e imprimir compras y gasto promedio por cliente según segmento_cliente.
-    pass
+    segmentos = df.groupby("segmento_cliente").agg(
+        clientes=("id_cliente", "nunique"),
+        compras=("id_venta", "count"),
+        gasto=("total", "sum"),
+    )
+    segmentos["compras_por_cliente"] = (segmentos["compras"] / segmentos["clientes"]).round(2)
+    segmentos["gasto_por_cliente"] = (segmentos["gasto"] / segmentos["clientes"]).round(0)
+
+    print("\n===== Pregunta 3: VIP vs Regular (promedio por cliente) =====")
+    print(segmentos)
+
+    gasto_vip = segmentos.loc["VIP", "gasto_por_cliente"]
+    gasto_regular = segmentos.loc["Regular", "gasto_por_cliente"]
+    if gasto_vip > gasto_regular:
+        print("Los clientes VIP gastan más por cliente que los Regulares.")
+    else:
+        print("Los clientes VIP NO gastan más por cliente que los Regulares.")
 
 
 def metodo_pago_mas_usado(df):
@@ -52,7 +80,13 @@ def metodo_pago_mas_usado(df):
     Pista: df["metodo_pago"].value_counts()
     """
     # TODO 11: calcular e imprimir el conteo por método de pago y cuál es el más usado.
-    pass
+    conteo = df["metodo_pago"].value_counts()
+    porcentaje = (df["metodo_pago"].value_counts(normalize=True) * 100).round(1)
+    tabla = pd.concat([conteo, porcentaje], axis=1, keys=["ventas", "porcentaje"])
+
+    print("\n===== Pregunta 4: Método de pago más usado =====")
+    print(tabla)
+    print(f"Método de pago más usado: {conteo.index[0]} ({conteo.iloc[0]} ventas)")
 
 
 def top5_clientes(df):
@@ -62,4 +96,12 @@ def top5_clientes(df):
     ordenar por compras (y por gasto como desempate) y tomar las primeras 5 con .head(5).
     """
     # TODO 12: calcular e imprimir el top 5.
-    pass
+    top5 = (
+        df.groupby(["id_cliente", "nombre_cliente"])
+        .agg(compras=("id_venta", "count"), gasto=("total", "sum"))
+        .sort_values(["compras", "gasto"], ascending=[False, False])
+        .head(5)
+    )
+
+    print("\n===== Pregunta 5: Top 5 clientes con más compras =====")
+    print(top5)
